@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -14,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MAPP.ServiceDefaults\MAPP.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\MAPP.ServiceDefaults\MAPP.ServiceDefaults.csproj" IsAspireProjectResource="false" />
     <ProjectReference Include="..\..\src\Services\MAPP.Services.Planning\MAPP.Services.Planning.csproj" />
     <ProjectReference Include="..\..\src\Services\MAPP.Services.Observations\MAPP.Services.Observations.csproj" />
     <ProjectReference Include="..\..\src\Services\MAPP.Services.UserManagement\MAPP.Services.UserManagement.csproj" />

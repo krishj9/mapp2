@@ -8,6 +8,7 @@
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="9.3.0" />
     <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="9.3.0" />
     <PackageVersion Include="Aspire.Hosting.Python" Version="9.3.0" />
+    <PackageVersion Include="Aspire.Hosting.NodeJs" Version="9.3.0" />
     <PackageVersion Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.3.0" />
     <PackageVersion Include="Google.Cloud.PubSub.V1" Version="3.27.0" />
     <PackageVersion Include="Google.Cloud.Storage.V1" Version="4.10.0" />
