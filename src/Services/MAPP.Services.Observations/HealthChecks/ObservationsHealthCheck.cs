@@ -1,6 +1,5 @@
 using MAPP.BuildingBlocks.Web.HealthChecks;
 using MAPP.Modules.Observations.Application.Common.Interfaces;
-using MAPP.Modules.Observations.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -41,10 +40,10 @@ public class ObservationsHealthCheck : DomainHealthCheck
             if (canConnect)
             {
                 var observationCount = await _dbContext.Observations.CountAsync(cancellationToken);
-                var dataPointCount = await _dbContext.ObservationData.CountAsync(cancellationToken);
+                var artifactCount = await _dbContext.ObservationArtifacts.CountAsync(cancellationToken);
                 
                 checks.Add("total_observations", observationCount);
-                checks.Add("total_data_points", dataPointCount);
+                checks.Add("total_artifacts", artifactCount);
                 checks.Add("database_status", "healthy");
                 
                 // Check for recent observations (last 24 hours)
@@ -94,20 +93,20 @@ public class ObservationsHealthCheck : DomainHealthCheck
         // Data validation metrics
         try
         {
-            var validatedCount = await _dbContext.Observations
-                .Where(o => o.Status == ObservationStatus.Validated)
+            var publishedCount = await _dbContext.Observations
+                .Where(o => !o.IsDraft)
                 .CountAsync(cancellationToken);
-            var rejectedCount = await _dbContext.Observations
-                .Where(o => o.Status == ObservationStatus.Rejected)
+            var draftCount = await _dbContext.Observations
+                .Where(o => o.IsDraft)
                 .CountAsync(cancellationToken);
                 
-            checks.Add("validated_observations", validatedCount);
-            checks.Add("rejected_observations", rejectedCount);
+            checks.Add("published_observations", publishedCount);
+            checks.Add("draft_observations", draftCount);
             
-            if (validatedCount + rejectedCount > 0)
+            if (publishedCount + draftCount > 0)
             {
-                var validationRate = (double)validatedCount / (validatedCount + rejectedCount) * 100;
-                checks.Add("validation_success_rate", Math.Round(validationRate, 2));
+                var publishedRate = (double)publishedCount / (publishedCount + draftCount) * 100;
+                checks.Add("published_rate", Math.Round(publishedRate, 2));
             }
         }
         catch (Exception ex)

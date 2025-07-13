@@ -11,5 +11,6 @@ namespace MAPP.Modules.Observations.Application.Common.Interfaces;
 public interface IObservationsDbContext : IApplicationDbContext
 {
     DbSet<Observation> Observations { get; }
-    DbSet<ObservationData> ObservationData { get; }
+    DbSet<ObservationArtifact> ObservationArtifacts { get; }
+    DbSet<ProgressionPoint> ProgressionPoints { get; }
 }

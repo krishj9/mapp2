@@ -25,40 +25,52 @@ public class GetObservationsQueryHandler : IRequestHandler<GetObservationsQuery,
         var query = _context.Observations.AsQueryable();
 
         // Apply filters
-        if (request.Status.HasValue)
+        if (request.ChildId.HasValue)
         {
-            query = query.Where(o => (int)o.Status == request.Status.Value);
+            query = query.Where(o => o.ChildId == request.ChildId.Value);
         }
 
-        if (request.Priority.HasValue)
+        if (request.TeacherId.HasValue)
         {
-            query = query.Where(o => o.Priority.Value == request.Priority.Value);
+            query = query.Where(o => o.TeacherId == request.TeacherId.Value);
         }
 
-        if (!string.IsNullOrEmpty(request.ObserverId))
+        if (request.DomainId.HasValue)
         {
-            query = query.Where(o => o.ObserverId == request.ObserverId);
+            query = query.Where(o => o.DomainId == request.DomainId.Value);
         }
 
-        if (!string.IsNullOrEmpty(request.Location))
+        if (request.AttributeId.HasValue)
         {
-            query = query.Where(o => o.Location != null && o.Location.Contains(request.Location));
+            query = query.Where(o => o.AttributeId == request.AttributeId.Value);
+        }
+
+        if (request.IsDraft.HasValue)
+        {
+            query = query.Where(o => o.IsDraft == request.IsDraft.Value);
+        }
+
+        if (!string.IsNullOrEmpty(request.SearchText))
+        {
+            query = query.Where(o => o.ObservationText.Contains(request.SearchText) || 
+                                   o.ChildName.Contains(request.SearchText) ||
+                                   o.TeacherName.Contains(request.SearchText));
         }
 
         if (request.FromDate.HasValue)
         {
-            query = query.Where(o => o.ObservedAt >= request.FromDate.Value);
+            query = query.Where(o => o.ObservationDate >= request.FromDate.Value);
         }
 
         if (request.ToDate.HasValue)
         {
-            query = query.Where(o => o.ObservedAt <= request.ToDate.Value);
+            query = query.Where(o => o.ObservationDate <= request.ToDate.Value);
         }
 
         var totalCount = await query.CountAsync(cancellationToken);
 
         var observations = await query
-            .OrderByDescending(o => o.ObservedAt ?? o.Created)
+            .OrderByDescending(o => o.ObservationDate)
             .Skip((request.PageNumber - 1) * request.PageSize)
             .Take(request.PageSize)
             .ProjectTo<ObservationBriefDto>(_mapper.ConfigurationProvider)

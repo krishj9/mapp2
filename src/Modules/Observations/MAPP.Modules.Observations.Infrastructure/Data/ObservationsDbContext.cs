@@ -14,7 +14,8 @@ namespace MAPP.Modules.Observations.Infrastructure.Data;
 public class ObservationsDbContext : BaseDbContext, IObservationsDbContext
 {
     public DbSet<Observation> Observations => Set<Observation>();
-    public DbSet<ObservationData> ObservationData => Set<ObservationData>();
+    public DbSet<ObservationArtifact> ObservationArtifacts => Set<ObservationArtifact>();
+    public DbSet<ProgressionPoint> ProgressionPoints => Set<ProgressionPoint>();
 
     public ObservationsDbContext(
         DbContextOptions<ObservationsDbContext> options,

@@ -32,10 +32,19 @@ public class ExternalObservationReceivedEventHandler : INotificationHandler<Exte
             // Create a new observation based on the external event
             var createCommand = new CreateObservationCommand
             {
-                Title = $"[External] {notification.Title}",
-                Description = $"Received from {notification.Source}: {notification.Description}",
-                // You might want to set a specific observer ID for external observations
-                // ObserverId = "external-system"
+                ChildId = 0, // Placeholder for external observations
+                ChildName = "[External System]",
+                TeacherId = 0, // Placeholder for external observations  
+                TeacherName = "[External System]",
+                DomainId = 1, // Default domain for external observations
+                DomainName = "External Data",
+                AttributeId = 1, // Default attribute for external observations
+                AttributeName = "External Observation",
+                ObservationText = $"[External] {notification.Title} - Received from {notification.Source}: {notification.Description}",
+                ObservationDate = DateTime.UtcNow,
+                LearningContext = $"External data from {notification.Source}",
+                IsDraft = false,
+                Tags = new List<string> { "external", notification.Source.ToLowerInvariant() }
             };
 
             var observationId = await _mediator.Send(createCommand, cancellationToken);

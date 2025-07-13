@@ -7,100 +7,172 @@ using MAPP.Modules.Observations.Domain.Enums;
 namespace MAPP.Modules.Observations.Domain.Entities;
 
 /// <summary>
-/// Observation aggregate root following DDD patterns from Ardalis template
+/// Observation aggregate root following DDD patterns
 /// </summary>
 public class Observation : BaseAuditableEntity
 {
-    private readonly List<ObservationData> _data = new();
+    private readonly List<ObservationArtifact> _mediaItems = new();
+    private readonly List<int> _progressionPointIds = new();
+    private readonly List<Tag> _tags = new();
 
-    public string Title { get; private set; } = string.Empty;
-    public string? Description { get; private set; }
-    public ObservationStatus Status { get; private set; } = ObservationStatus.Draft;
-    public Priority Priority { get; private set; } = Priority.Medium;
-    public DateTimeOffset? ObservedAt { get; private set; }
-    public string? ObserverId { get; private set; }
-    public string? Location { get; private set; }
+    public long ChildId { get; private set; }
+    public string ChildName { get; private set; } = string.Empty;
+    public long TeacherId { get; private set; }
+    public string TeacherName { get; private set; } = string.Empty;
+    public int DomainId { get; private set; }
+    public string DomainName { get; private set; } = string.Empty;
+    public int AttributeId { get; private set; }
+    public string AttributeName { get; private set; } = string.Empty;
+    public string ObservationText { get; private set; } = string.Empty;
+    public DateTime ObservationDate { get; private set; }
+    public string? LearningContext { get; private set; }
+    public bool IsDraft { get; private set; }
 
-    public IReadOnlyCollection<ObservationData> Data => _data.AsReadOnly();
+    public IReadOnlyCollection<ObservationArtifact> MediaItems => _mediaItems.AsReadOnly();
+    public IReadOnlyCollection<int> ProgressionPointIds => _progressionPointIds.AsReadOnly();
+    public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
 
     // Private constructor for EF Core
     private Observation() { }
 
-    public Observation(string title, string? description = null, string? observerId = null)
+    public Observation(
+        long childId,
+        string childName,
+        long teacherId,
+        string teacherName,
+        int domainId,
+        string domainName,
+        int attributeId,
+        string attributeName,
+        string observationText,
+        DateTime observationDate,
+        string? learningContext = null,
+        bool isDraft = false)
     {
-        Title = Guard.Against.NullOrEmpty(title, nameof(title));
-        Description = description;
-        ObserverId = observerId;
-        Status = ObservationStatus.Draft;
-        Priority = Priority.Medium;
-        ObservedAt = DateTimeOffset.UtcNow;
+        ChildId = Guard.Against.NegativeOrZero(childId, nameof(childId));
+        ChildName = Guard.Against.NullOrEmpty(childName, nameof(childName));
+        TeacherId = Guard.Against.NegativeOrZero(teacherId, nameof(teacherId));
+        TeacherName = Guard.Against.NullOrEmpty(teacherName, nameof(teacherName));
+        DomainId = Guard.Against.NegativeOrZero(domainId, nameof(domainId));
+        DomainName = Guard.Against.NullOrEmpty(domainName, nameof(domainName));
+        AttributeId = Guard.Against.NegativeOrZero(attributeId, nameof(attributeId));
+        AttributeName = Guard.Against.NullOrEmpty(attributeName, nameof(attributeName));
+        ObservationText = Guard.Against.NullOrEmpty(observationText, nameof(observationText));
+        ObservationDate = observationDate;
+        LearningContext = learningContext;
+        IsDraft = isDraft;
 
         AddDomainEvent(new ObservationCreatedEvent(this));
     }
 
-    public void UpdateDetails(string title, string? description = null)
+    public void UpdateObservation(string observationText, DateTime? observationDate = null, string? learningContext = null)
     {
-        Title = Guard.Against.NullOrEmpty(title, nameof(title));
-        Description = description;
-    }
-
-    public void SetPriority(Priority priority)
-    {
-        Priority = priority;
-    }
-
-    public void SetLocation(string? location)
-    {
-        Location = location;
-    }
-
-    public void SetObservedAt(DateTimeOffset observedAt)
-    {
-        ObservedAt = observedAt;
-    }
-
-    public void Submit()
-    {
-        if (Status != ObservationStatus.Draft)
+        ObservationText = Guard.Against.NullOrEmpty(observationText, nameof(observationText));
+        
+        if (observationDate.HasValue)
         {
-            throw new InvalidOperationException($"Cannot submit observation in {Status} status");
+            ObservationDate = observationDate.Value;
         }
-
-        Status = ObservationStatus.Submitted;
-        AddDomainEvent(new ObservationSubmittedEvent(this));
+        
+        LearningContext = learningContext;
+        
+        AddDomainEvent(new ObservationUpdatedEvent(this));
     }
 
-    public void Validate()
+    public void UpdateClassification(int domainId, string domainName, int attributeId, string attributeName, List<int> progressionPointIds)
     {
-        if (Status != ObservationStatus.Submitted)
+        DomainId = Guard.Against.NegativeOrZero(domainId, nameof(domainId));
+        DomainName = Guard.Against.NullOrEmpty(domainName, nameof(domainName));
+        AttributeId = Guard.Against.NegativeOrZero(attributeId, nameof(attributeId));
+        AttributeName = Guard.Against.NullOrEmpty(attributeName, nameof(attributeName));
+        
+        _progressionPointIds.Clear();
+        _progressionPointIds.AddRange(progressionPointIds);
+        
+        AddDomainEvent(new ObservationUpdatedEvent(this));
+    }
+
+    public void SetDraftStatus(bool isDraft)
+    {
+        IsDraft = isDraft;
+        
+        if (!isDraft)
         {
-            throw new InvalidOperationException($"Cannot validate observation in {Status} status");
+            AddDomainEvent(new ObservationPublishedEvent(this));
         }
-
-        Status = ObservationStatus.Validated;
-        AddDomainEvent(new ObservationValidatedEvent(this));
     }
 
-    public void Reject(string? reason = null)
+    public ObservationArtifact AddMediaItem(
+        string originalFileName,
+        string contentType,
+        long fileSizeBytes,
+        string? caption = null,
+        int displayOrder = 0,
+        string? metadata = null)
     {
-        if (Status == ObservationStatus.Validated)
+        var mediaItem = new ObservationArtifact(
+            Id,
+            originalFileName,
+            contentType,
+            fileSizeBytes,
+            caption,
+            displayOrder,
+            metadata);
+
+        _mediaItems.Add(mediaItem);
+        return mediaItem;
+    }
+
+    public void RemoveMediaItem(ObservationArtifact mediaItem)
+    {
+        _mediaItems.Remove(mediaItem);
+    }
+
+    public void AddTag(string tagValue)
+    {
+        var tag = new Tag(tagValue);
+        if (!_tags.Contains(tag))
         {
-            throw new InvalidOperationException("Cannot reject a validated observation");
+            _tags.Add(tag);
         }
-
-        Status = ObservationStatus.Rejected;
-        AddDomainEvent(new ObservationRejectedEvent(this, reason));
     }
 
-    public ObservationData AddData(string key, string value, string? unit = null)
+    public void RemoveTag(string tagValue)
     {
-        var data = new ObservationData(key, value, unit, Id);
-        _data.Add(data);
-        return data;
+        var tag = new Tag(tagValue);
+        _tags.Remove(tag);
     }
 
-    public void RemoveData(ObservationData data)
+    public void ClearTags()
     {
-        _data.Remove(data);
+        _tags.Clear();
     }
-}
+
+    public void SetTags(List<string> tags)
+    {
+        _tags.Clear();
+        foreach (var tagValue in tags)
+        {
+            AddTag(tagValue);
+        }
+    }
+
+    public void AddProgressionPoint(int progressionPointId)
+    {
+        if (!_progressionPointIds.Contains(progressionPointId))
+        {
+            _progressionPointIds.Add(progressionPointId);
+        }
+    }
+
+    public void RemoveProgressionPoint(int progressionPointId)
+    {
+        _progressionPointIds.Remove(progressionPointId);
+    }
+
+    public void SetProgressionPoints(List<int> progressionPointIds)
+    {
+        _progressionPointIds.Clear();
+        _progressionPointIds.AddRange(progressionPointIds);
+    }
+} 

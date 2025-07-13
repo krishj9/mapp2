@@ -25,10 +25,12 @@ public class GetAll : BaseEndpoint<GetObservationsRequest, ObservationsVm>
     {
         var query = new GetObservationsQuery
         {
-            Status = req.Status,
-            Priority = req.Priority,
-            ObserverId = req.ObserverId,
-            Location = req.Location,
+            ChildId = req.ChildId,
+            TeacherId = req.TeacherId,
+            DomainId = req.DomainId,
+            AttributeId = req.AttributeId,
+            IsDraft = req.IsDraft,
+            SearchText = req.SearchText,
             FromDate = req.FromDate,
             ToDate = req.ToDate,
             PageNumber = req.PageNumber,
@@ -43,12 +45,14 @@ public class GetAll : BaseEndpoint<GetObservationsRequest, ObservationsVm>
 
 public class GetObservationsRequest
 {
-    public int? Status { get; set; }
-    public int? Priority { get; set; }
-    public string? ObserverId { get; set; }
-    public string? Location { get; set; }
-    public DateTimeOffset? FromDate { get; set; }
-    public DateTimeOffset? ToDate { get; set; }
+    public long? ChildId { get; set; }
+    public long? TeacherId { get; set; }
+    public int? DomainId { get; set; }
+    public int? AttributeId { get; set; }
+    public bool? IsDraft { get; set; }
+    public string? SearchText { get; set; }
+    public DateTime? FromDate { get; set; }
+    public DateTime? ToDate { get; set; }
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 10;
 }

@@ -26,11 +26,20 @@ public class Create : BaseEndpoint<CreateObservationRequest, CreateObservationRe
     {
         var command = new CreateObservationCommand
         {
-            Title = req.Title,
-            Description = req.Description,
-            Priority = req.Priority,
-            ObservedAt = req.ObservedAt,
-            Location = req.Location
+            ChildId = req.ChildId,
+            ChildName = req.ChildName,
+            TeacherId = req.TeacherId,
+            TeacherName = req.TeacherName,
+            DomainId = req.DomainId,
+            DomainName = req.DomainName,
+            AttributeId = req.AttributeId,
+            AttributeName = req.AttributeName,
+            ProgressionPointIds = req.ProgressionPointIds,
+            ObservationText = req.ObservationText,
+            ObservationDate = req.ObservationDate,
+            LearningContext = req.LearningContext,
+            Tags = req.Tags,
+            IsDraft = req.IsDraft
         };
 
         var observationId = await Mediator.Send(command, ct);
@@ -41,11 +50,20 @@ public class Create : BaseEndpoint<CreateObservationRequest, CreateObservationRe
 
 public class CreateObservationRequest
 {
-    public string Title { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public int Priority { get; set; } = 2; // Medium priority
-    public DateTimeOffset? ObservedAt { get; set; }
-    public string? Location { get; set; }
+    public long ChildId { get; set; }
+    public string ChildName { get; set; } = string.Empty;
+    public long TeacherId { get; set; }
+    public string TeacherName { get; set; } = string.Empty;
+    public int DomainId { get; set; }
+    public string DomainName { get; set; } = string.Empty;
+    public int AttributeId { get; set; }
+    public string AttributeName { get; set; } = string.Empty;
+    public List<int> ProgressionPointIds { get; set; } = new();
+    public string ObservationText { get; set; } = string.Empty;
+    public DateTime ObservationDate { get; set; }
+    public string? LearningContext { get; set; }
+    public List<string> Tags { get; set; } = new();
+    public bool IsDraft { get; set; } = false;
 }
 
 public class CreateObservationResponse

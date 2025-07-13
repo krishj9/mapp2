@@ -7,12 +7,14 @@ namespace MAPP.Modules.Observations.Application.Observations.Queries.GetObservat
 /// </summary>
 public record GetObservationsQuery : IRequest<ObservationsVm>
 {
-    public int? Status { get; init; }
-    public int? Priority { get; init; }
-    public string? ObserverId { get; init; }
-    public string? Location { get; init; }
-    public DateTimeOffset? FromDate { get; init; }
-    public DateTimeOffset? ToDate { get; init; }
+    public long? ChildId { get; init; }
+    public long? TeacherId { get; init; }
+    public int? DomainId { get; init; }
+    public int? AttributeId { get; init; }
+    public bool? IsDraft { get; init; }
+    public string? SearchText { get; init; }
+    public DateTime? FromDate { get; init; }
+    public DateTime? ToDate { get; init; }
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
 }

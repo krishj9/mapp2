@@ -2,7 +2,6 @@ using MediatR;
 using MAPP.BuildingBlocks.Application.Common.Interfaces;
 using MAPP.Modules.Observations.Application.Common.Interfaces;
 using MAPP.Modules.Observations.Domain.Entities;
-using MAPP.Modules.Observations.Domain.ValueObjects;
 
 namespace MAPP.Modules.Observations.Application.Observations.Commands.CreateObservation;
 
@@ -25,21 +24,24 @@ public class CreateObservationCommandHandler : IRequestHandler<CreateObservation
     public async Task<int> Handle(CreateObservationCommand request, CancellationToken cancellationToken)
     {
         var observation = new Observation(
-            request.Title,
-            request.Description,
-            _currentUserService.UserId);
+            request.ChildId,
+            request.ChildName,
+            request.TeacherId,
+            request.TeacherName,
+            request.DomainId,
+            request.DomainName,
+            request.AttributeId,
+            request.AttributeName,
+            request.ObservationText,
+            request.ObservationDate,
+            request.LearningContext,
+            request.IsDraft);
 
-        observation.SetPriority(Priority.FromValue(request.Priority));
+        // Set progression points
+        observation.SetProgressionPoints(request.ProgressionPointIds);
 
-        if (request.ObservedAt.HasValue)
-        {
-            observation.SetObservedAt(request.ObservedAt.Value);
-        }
-
-        if (!string.IsNullOrEmpty(request.Location))
-        {
-            observation.SetLocation(request.Location);
-        }
+        // Set tags
+        observation.SetTags(request.Tags);
 
         _context.Observations.Add(observation);
 
