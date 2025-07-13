@@ -9,8 +9,33 @@ using MAPP.BuildingBlocks.Infrastructure.PubSub;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 🔍 DEBUG: Log configuration information
+Console.WriteLine("🔍 DEBUGGING CONFIGURATION LOADING:");
+Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
+Console.WriteLine($"Content Root: {builder.Environment.ContentRootPath}");
+Console.WriteLine($"Application Name: {builder.Environment.ApplicationName}");
+
+// Log environment variables
+Console.WriteLine("🔍 ENVIRONMENT VARIABLES:");
+Console.WriteLine($"ASPNETCORE_ENVIRONMENT: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
+Console.WriteLine($"DATABASE_CONNECTION_STRING: {Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING")?.Substring(0, Math.Min(50, Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING")?.Length ?? 0))}...");
+
 // Add service defaults & Aspire components
 builder.AddServiceDefaults();
+
+// 🔍 DEBUG: Test configuration access
+Console.WriteLine("🔍 TESTING CONFIGURATION ACCESS:");
+var testConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine($"Connection string from GetConnectionString: {testConnectionString?.Substring(0, Math.Min(50, testConnectionString?.Length ?? 0))}...");
+Console.WriteLine($"Connection string length: {testConnectionString?.Length ?? 0}");
+
+// Test direct configuration access
+var directConfig = builder.Configuration["ConnectionStrings:DefaultConnection"];
+Console.WriteLine($"Direct config access: {directConfig?.Substring(0, Math.Min(50, directConfig?.Length ?? 0))}...");
+
+// Test environment variable substitution
+var envVarValue = builder.Configuration["DATABASE_CONNECTION_STRING"];
+Console.WriteLine($"DATABASE_CONNECTION_STRING from config: {envVarValue?.Substring(0, Math.Min(50, envVarValue?.Length ?? 0))}...");
 
 // Add services to the container
 builder.Services.AddWebServices();
