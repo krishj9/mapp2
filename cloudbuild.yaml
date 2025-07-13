@@ -1,0 +1,34 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-f', 'src/Services/MAPP.Services.Observations/Dockerfile',
+      '-t', 'us-central1-docker.pkg.dev/mapp-dev-457512/mapp-docker-repo/observations-api:manual-${BUILD_ID}',
+      '-t', 'us-central1-docker.pkg.dev/mapp-dev-457512/mapp-docker-repo/observations-api:latest',
+      '.'
+    ]
+
+  # Push the Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'us-central1-docker.pkg.dev/mapp-dev-457512/mapp-docker-repo/observations-api:manual-${BUILD_ID}'
+    ]
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'us-central1-docker.pkg.dev/mapp-dev-457512/mapp-docker-repo/observations-api:latest'
+    ]
+
+# Store images in Artifact Registry
+images:
+  - 'us-central1-docker.pkg.dev/mapp-dev-457512/mapp-docker-repo/observations-api:manual-${BUILD_ID}'
+  - 'us-central1-docker.pkg.dev/mapp-dev-457512/mapp-docker-repo/observations-api:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
+
+timeout: '1200s'

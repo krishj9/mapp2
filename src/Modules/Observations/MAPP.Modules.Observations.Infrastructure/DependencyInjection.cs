@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
 using MAPP.BuildingBlocks.Application.Common.Interfaces;
 using MAPP.BuildingBlocks.Infrastructure.Data.Interceptors;
 using MAPP.BuildingBlocks.Infrastructure.Services;
@@ -22,7 +23,10 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         // Create a temporary logger for debugging
-        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        using var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddProvider(new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider());
+        });
         var logger = loggerFactory.CreateLogger("ObservationsInfrastructure");
 
         // Try to get connection string from configuration first, then fallback to environment variable
