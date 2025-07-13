@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: mapp-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - mapp-monitoring
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: mapp-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - mapp-monitoring
+
+  # Jaeger for distributed tracing
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: mapp-jaeger
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - mapp-monitoring
+
+  # Seq for structured logging
+  seq:
+    image: datalust/seq:latest
+    container_name: mapp-seq
+    ports:
+      - "5341:80"
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - seq_data:/data
+    networks:
+      - mapp-monitoring
+
+  # Health check dashboard
+  healthchecks-ui:
+    image: xabarilcoding/healthchecksui:latest
+    container_name: mapp-healthchecks-ui
+    ports:
+      - "8080:80"
+    environment:
+      - HealthChecksUI__HealthChecks__0__Name=Planning Domain
+      - HealthChecksUI__HealthChecks__0__Uri=http://host.docker.internal:5001/health
+      - HealthChecksUI__HealthChecks__1__Name=Observations Domain
+      - HealthChecksUI__HealthChecks__1__Uri=http://host.docker.internal:5002/health
+      - HealthChecksUI__HealthChecks__2__Name=UserManagement Domain
+      - HealthChecksUI__HealthChecks__2__Uri=http://host.docker.internal:5003/health
+      - HealthChecksUI__HealthChecks__3__Name=Reports Domain
+      - HealthChecksUI__HealthChecks__3__Uri=http://host.docker.internal:5004/health
+      - HealthChecksUI__HealthChecks__4__Name=Planning AI
+      - HealthChecksUI__HealthChecks__4__Uri=http://host.docker.internal:8001/health
+      - HealthChecksUI__HealthChecks__5__Name=Observations AI
+      - HealthChecksUI__HealthChecks__5__Uri=http://host.docker.internal:8002/health
+      - HealthChecksUI__HealthChecks__6__Name=Reports AI
+      - HealthChecksUI__HealthChecks__6__Uri=http://host.docker.internal:8003/health
+    networks:
+      - mapp-monitoring
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  seq_data:
+
+networks:
+  mapp-monitoring:
+    driver: bridge

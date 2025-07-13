@@ -1,0 +1,40 @@
+using Ardalis.GuardClauses;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using MAPP.BuildingBlocks.Application.Common.Interfaces;
+using MAPP.BuildingBlocks.Infrastructure.Data.Interceptors;
+using MAPP.BuildingBlocks.Infrastructure.Services;
+using MAPP.Modules.Observations.Application.Common.Interfaces;
+using MAPP.Modules.Observations.Infrastructure.Data;
+
+namespace MAPP.Modules.Observations.Infrastructure;
+
+/// <summary>
+/// Dependency injection configuration for Observations Infrastructure layer
+/// Following Ardalis Clean Architecture patterns
+/// </summary>
+public static class DependencyInjection
+{
+    public static IServiceCollection AddObservationsInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
+
+        services.AddScoped<IDomainEventService, DomainEventService>();
+        services.AddScoped<AuditableEntitySaveChangesInterceptor>();
+
+        services.AddDbContext<ObservationsDbContext>((sp, options) =>
+        {
+            options.AddInterceptors(sp.GetRequiredService<AuditableEntitySaveChangesInterceptor>());
+            options.UseNpgsql(connectionString);
+        });
+
+        services.AddScoped<IObservationsDbContext>(provider => provider.GetRequiredService<ObservationsDbContext>());
+
+        return services;
+    }
+}

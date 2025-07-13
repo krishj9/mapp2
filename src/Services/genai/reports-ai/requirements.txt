@@ -1,0 +1,21 @@
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+pydantic==2.9.2
+python-multipart==0.0.12
+httpx==0.27.2
+
+# Report generation libraries
+# reportlab==4.2.0
+# openpyxl==3.1.5
+# jinja2==3.1.4
+# weasyprint==62.3
+
+# AI/ML libraries for insights
+# openai==1.51.0
+# langchain==0.3.0
+# numpy==2.1.0
+# pandas==2.2.0
+
+# Database connectivity
+# asyncpg==0.29.0
+# sqlalchemy[asyncio]==2.0.35

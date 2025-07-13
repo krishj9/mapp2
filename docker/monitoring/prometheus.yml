@@ -1,0 +1,80 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # MAPP Planning Domain
+  - job_name: 'mapp-planning-api'
+    static_configs:
+      - targets: ['host.docker.internal:5001']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  - job_name: 'mapp-planning-ai'
+    static_configs:
+      - targets: ['host.docker.internal:8001']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # MAPP Observations Domain
+  - job_name: 'mapp-observations-api'
+    static_configs:
+      - targets: ['host.docker.internal:5002']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  - job_name: 'mapp-observations-ai'
+    static_configs:
+      - targets: ['host.docker.internal:8002']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # MAPP UserManagement Domain
+  - job_name: 'mapp-usermanagement-api'
+    static_configs:
+      - targets: ['host.docker.internal:5003']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # MAPP Reports Domain
+  - job_name: 'mapp-reports-api'
+    static_configs:
+      - targets: ['host.docker.internal:5004']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  - job_name: 'mapp-reports-ai'
+    static_configs:
+      - targets: ['host.docker.internal:8003']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # Health checks monitoring
+  - job_name: 'mapp-health-checks'
+    static_configs:
+      - targets: 
+        - 'host.docker.internal:5001'
+        - 'host.docker.internal:5002'
+        - 'host.docker.internal:5003'
+        - 'host.docker.internal:5004'
+        - 'host.docker.internal:8001'
+        - 'host.docker.internal:8002'
+        - 'host.docker.internal:8003'
+    metrics_path: '/health'
+    scrape_interval: 60s
+
+  # Angular MFEs (if they expose metrics)
+  - job_name: 'mapp-shell'
+    static_configs:
+      - targets: ['host.docker.internal:4200']
+    metrics_path: '/metrics'
+    scrape_interval: 60s
+
+  # System monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
