@@ -10,10 +10,11 @@ using MAPP.BuildingBlocks.Infrastructure.PubSub;
 var builder = WebApplication.CreateBuilder(args);
 
 // 🔍 DEBUG: Log configuration information
-Console.WriteLine("🔍 DEBUGGING CONFIGURATION LOADING:");
+Console.WriteLine("🔍 DEBUGGING CONFIGURATION LOADING - BUILD v2:");
 Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
 Console.WriteLine($"Content Root: {builder.Environment.ContentRootPath}");
 Console.WriteLine($"Application Name: {builder.Environment.ApplicationName}");
+Console.WriteLine($"Build Time: {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss} UTC");
 
 // Log environment variables
 Console.WriteLine("🔍 ENVIRONMENT VARIABLES:");
