@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MAPP.BuildingBlocks.Application\MAPP.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\MAPP.BuildingBlocks.Infrastructure\MAPP.BuildingBlocks.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

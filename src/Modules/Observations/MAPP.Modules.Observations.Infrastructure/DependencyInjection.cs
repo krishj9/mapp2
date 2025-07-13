@@ -25,7 +25,7 @@ public static class DependencyInjection
         // Create a temporary logger for debugging
         using var loggerFactory = LoggerFactory.Create(builder =>
         {
-            builder.AddProvider(new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider());
+            builder.AddSimpleConsole();
         });
         var logger = loggerFactory.CreateLogger("ObservationsInfrastructure");
 

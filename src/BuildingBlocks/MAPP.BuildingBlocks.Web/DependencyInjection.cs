@@ -1,7 +1,10 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MAPP.BuildingBlocks.Application.Common.Interfaces;
+using MAPP.BuildingBlocks.Infrastructure.Storage;
 using MAPP.BuildingBlocks.Web.Services;
 
 namespace MAPP.BuildingBlocks.Web;
@@ -22,11 +25,28 @@ public static class DependencyInjection
                 {
                     o.DocumentSettings = s =>
                     {
-                        s.Title = "MAPP Observations API";
+                        s.Title = "MAPP API";
                         s.Version = "v1";
-                        s.Description = "API for managing observations in the MAPP system";
+                        s.Description = "API for the MAPP system including media storage capabilities";
                     };
                 });
+
+        return services;
+    }
+
+    /// <summary>
+    /// Adds web services with media storage support
+    /// </summary>
+    public static IServiceCollection AddWebServicesWithMediaStorage(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        IHostEnvironment environment)
+    {
+        // Add base web services
+        services.AddWebServices();
+
+        // Add media storage based on environment
+        services.AddMediaStorageForEnvironment(configuration, environment);
 
         return services;
     }

@@ -24,6 +24,11 @@ public class Result
     {
         return new Result(false, errors);
     }
+
+    public static Result Failure(string error)
+    {
+        return new Result(false, new[] { error });
+    }
 }
 
 public class Result<T> : Result
@@ -44,5 +49,10 @@ public class Result<T> : Result
     public static new Result<T> Failure(IEnumerable<string> errors)
     {
         return new Result<T>(false, default!, errors);
+    }
+
+    public static new Result<T> Failure(string error)
+    {
+        return new Result<T>(false, default!, new[] { error });
     }
 }
