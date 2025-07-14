@@ -2,6 +2,10 @@ using Aspire.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
+// Add Redis for caching
+var redis = builder.AddRedis("redis")
+    .WithDataVolume();
+
 // Add PostgreSQL database - single shared database with schema separation
 var postgres = builder.AddPostgres("postgres")
     .WithDataVolume()
@@ -16,7 +20,9 @@ var planningApi = builder.AddProject<Projects.MAPP_Services_Planning>("planning-
 
 var observationsApi = builder.AddProject<Projects.MAPP_Services_Observations>("observations-api")
     .WithReference(worldPlanningDb)
-    .WaitFor(postgres);
+    .WithReference(redis)
+    .WaitFor(postgres)
+    .WaitFor(redis);
 
 var userManagementApi = builder.AddProject<Projects.MAPP_Services_UserManagement>("usermanagement-api")
     .WithReference(worldPlanningDb)

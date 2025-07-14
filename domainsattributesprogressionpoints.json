@@ -1,0 +1,130 @@
+{
+  "domains": [
+    {
+      "id": 1,
+      "name": "Physical Development",
+      "categoryName": "Physical",
+      "categoryTitle": "Physical Development",
+      "sortOrder": 1,
+      "attributes": [
+        {
+          "id": 1,
+          "number": 1,
+          "name": "Uses large muscles for movement",
+          "categoryInformation": "Gross motor skills including running, jumping, climbing",
+          "sortOrder": 1,
+          "progressionPoints": [
+            {
+              "id": 1,
+              "points": 1,
+              "title": "Emerging",
+              "description": "Shows beginning awareness and attempts at large muscle movement",
+              "order": "1",
+              "categoryInformation": "Early development stage",
+              "sortOrder": 1
+            },
+            {
+              "id": 2,
+              "points": 2,
+              "title": "Developing",
+              "description": "Demonstrates increasing control and coordination of large muscles",
+              "order": "2",
+              "categoryInformation": "Progressing development stage",
+              "sortOrder": 2
+            },
+            {
+              "id": 3,
+              "points": 3,
+              "title": "Secure",
+              "description": "Shows confident and coordinated use of large muscles",
+              "order": "3",
+              "categoryInformation": "Advanced development stage",
+              "sortOrder": 3
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "number": 2,
+          "name": "Uses small muscles for precise movements",
+          "categoryInformation": "Fine motor skills including writing, drawing, manipulating objects",
+          "sortOrder": 2,
+          "progressionPoints": [
+            {
+              "id": 4,
+              "points": 1,
+              "title": "Emerging",
+              "description": "Shows beginning attempts at precise movements with small muscles",
+              "order": "1",
+              "categoryInformation": "Early development stage",
+              "sortOrder": 1
+            },
+            {
+              "id": 5,
+              "points": 2,
+              "title": "Developing",
+              "description": "Demonstrates increasing precision and control of small muscles",
+              "order": "2",
+              "categoryInformation": "Progressing development stage",
+              "sortOrder": 2
+            },
+            {
+              "id": 6,
+              "points": 3,
+              "title": "Secure",
+              "description": "Shows confident and precise use of small muscles",
+              "order": "3",
+              "categoryInformation": "Advanced development stage",
+              "sortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Social-Emotional Development",
+      "categoryName": "Social-Emotional",
+      "categoryTitle": "Social-Emotional Development",
+      "sortOrder": 2,
+      "attributes": [
+        {
+          "id": 3,
+          "number": 1,
+          "name": "Shows self-awareness and confidence",
+          "categoryInformation": "Understanding of self and personal capabilities",
+          "sortOrder": 1,
+          "progressionPoints": [
+            {
+              "id": 7,
+              "points": 1,
+              "title": "Emerging",
+              "description": "Shows beginning awareness of self and personal abilities",
+              "order": "1",
+              "categoryInformation": "Early development stage",
+              "sortOrder": 1
+            },
+            {
+              "id": 8,
+              "points": 2,
+              "title": "Developing",
+              "description": "Demonstrates growing self-awareness and confidence in abilities",
+              "order": "2",
+              "categoryInformation": "Progressing development stage",
+              "sortOrder": 2
+            },
+            {
+              "id": 9,
+              "points": 3,
+              "title": "Secure",
+              "description": "Shows strong self-awareness and confidence in various situations",
+              "order": "3",
+              "categoryInformation": "Advanced development stage",
+              "sortOrder": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

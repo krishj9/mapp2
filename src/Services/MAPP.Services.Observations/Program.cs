@@ -39,7 +39,7 @@ var envVarValue = builder.Configuration["DATABASE_CONNECTION_STRING"];
 Console.WriteLine($"DATABASE_CONNECTION_STRING from config: {envVarValue?.Substring(0, Math.Min(50, envVarValue?.Length ?? 0))}...");
 
 // Add services to the container
-builder.Services.AddWebServices();
+builder.Services.AddWebServicesWithMediaStorage(builder.Configuration, builder.Environment);
 builder.Services.AddObservationsApplication();
 builder.Services.AddObservationsInfrastructure(builder.Configuration);
 

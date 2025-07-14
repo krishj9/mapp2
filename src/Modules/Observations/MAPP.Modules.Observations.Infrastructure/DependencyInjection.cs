@@ -8,7 +8,9 @@ using MAPP.BuildingBlocks.Application.Common.Interfaces;
 using MAPP.BuildingBlocks.Infrastructure.Data.Interceptors;
 using MAPP.BuildingBlocks.Infrastructure.Services;
 using MAPP.Modules.Observations.Application.Common.Interfaces;
+using MAPP.Modules.Observations.Application.Classifications.Services;
 using MAPP.Modules.Observations.Infrastructure.Data;
+using MAPP.Modules.Observations.Infrastructure.Services;
 
 namespace MAPP.Modules.Observations.Infrastructure;
 
@@ -79,6 +81,17 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IObservationsDbContext>(provider => provider.GetRequiredService<ObservationsDbContext>());
+
+        // Add Redis caching
+        var redisConnectionString = configuration.GetConnectionString("Redis") ?? "localhost:6379";
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = redisConnectionString;
+            options.InstanceName = "MAPP_Observations";
+        });
+
+        // Add classification services
+        services.AddScoped<IClassificationCacheService, ClassificationCacheService>();
 
         return services;
     }

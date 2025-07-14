@@ -11,7 +11,7 @@ namespace MAPP.Modules.Observations.Domain.Entities;
 /// </summary>
 public class ObservationArtifact : BaseAuditableEntity
 {
-    public long ObservationId { get; private set; }
+    public int ObservationId { get; private set; }
     public string OriginalFileName { get; private set; } = string.Empty;
     public string StoredFileName { get; private set; } = string.Empty;
     public string BucketName { get; private set; } = string.Empty;
@@ -35,7 +35,7 @@ public class ObservationArtifact : BaseAuditableEntity
     private ObservationArtifact() { }
 
     public ObservationArtifact(
-        long observationId,
+        int observationId,
         string originalFileName,
         string contentType,
         long fileSizeBytes,

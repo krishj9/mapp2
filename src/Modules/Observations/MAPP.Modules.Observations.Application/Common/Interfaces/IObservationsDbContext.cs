@@ -12,5 +12,7 @@ public interface IObservationsDbContext : IApplicationDbContext
 {
     DbSet<Observation> Observations { get; }
     DbSet<ObservationArtifact> ObservationArtifacts { get; }
+    DbSet<ObservationDomain> ObservationDomains { get; }
+    DbSet<ObservationAttribute> ObservationAttributes { get; }
     DbSet<ProgressionPoint> ProgressionPoints { get; }
 }

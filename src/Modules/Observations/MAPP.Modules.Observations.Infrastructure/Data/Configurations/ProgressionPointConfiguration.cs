@@ -11,6 +11,8 @@ public class ProgressionPointConfiguration : IEntityTypeConfiguration<Progressio
 {
     public void Configure(EntityTypeBuilder<ProgressionPoint> builder)
     {
+        builder.ToTable("ProgressionPoints", "observations");
+
         builder.Property(p => p.Points)
             .IsRequired();
 
@@ -22,33 +24,34 @@ public class ProgressionPointConfiguration : IEntityTypeConfiguration<Progressio
             .HasMaxLength(2000)
             .IsRequired();
 
-        builder.Property(p => p.DomainId)
+        builder.Property(p => p.Order)
+            .HasMaxLength(10);
+
+        builder.Property(p => p.CategoryInformation)
+            .HasMaxLength(2000);
+
+        builder.Property(p => p.SortOrder)
             .IsRequired();
 
         builder.Property(p => p.AttributeId)
             .IsRequired();
 
-        builder.Property(p => p.ParentProgressionPointId);
-
-        builder.Property(p => p.DisplayOrder)
-            .IsRequired();
-
         builder.Property(p => p.IsActive)
-            .IsRequired();
+            .IsRequired()
+            .HasDefaultValue(true);
 
-        // Configure self-referencing relationship
-        builder.HasOne(p => p.ParentProgressionPoint)
-            .WithMany(p => p.ChildProgressionPoints)
-            .HasForeignKey(p => p.ParentProgressionPointId)
-            .OnDelete(DeleteBehavior.Restrict);
+        // Configure relationships
+        builder.HasOne(p => p.Attribute)
+            .WithMany(a => a.ProgressionPoints)
+            .HasForeignKey(p => p.AttributeId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         // Configure indexes
-        builder.HasIndex(p => p.DomainId);
         builder.HasIndex(p => p.AttributeId);
-        builder.HasIndex(p => p.ParentProgressionPointId);
+        builder.HasIndex(p => p.Points);
+        builder.HasIndex(p => p.SortOrder);
         builder.HasIndex(p => p.IsActive);
-        builder.HasIndex(p => p.DisplayOrder);
-        builder.HasIndex(p => new { p.DomainId, p.AttributeId });
+        builder.HasIndex(p => new { p.AttributeId, p.SortOrder });
         builder.HasIndex(p => p.Created);
     }
 } 

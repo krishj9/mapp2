@@ -15,6 +15,8 @@ public class ObservationsDbContext : BaseDbContext, IObservationsDbContext
 {
     public DbSet<Observation> Observations => Set<Observation>();
     public DbSet<ObservationArtifact> ObservationArtifacts => Set<ObservationArtifact>();
+    public DbSet<ObservationDomain> ObservationDomains => Set<ObservationDomain>();
+    public DbSet<ObservationAttribute> ObservationAttributes => Set<ObservationAttribute>();
     public DbSet<ProgressionPoint> ProgressionPoints => Set<ProgressionPoint>();
 
     public ObservationsDbContext(
