@@ -11,6 +11,7 @@ using MAPP.Modules.Observations.Application.Common.Interfaces;
 using MAPP.Modules.Observations.Application.Classifications.Services;
 using MAPP.Modules.Observations.Infrastructure.Data;
 using MAPP.Modules.Observations.Infrastructure.Services;
+using MAPP.Modules.Observations.Application.Classifications.Services;
 
 namespace MAPP.Modules.Observations.Infrastructure;
 
@@ -92,6 +93,7 @@ public static class DependencyInjection
 
         // Add classification services
         services.AddScoped<IClassificationCacheService, ClassificationCacheService>();
+        services.AddScoped<IClassificationDataService, ClassificationDataService>();
 
         return services;
     }

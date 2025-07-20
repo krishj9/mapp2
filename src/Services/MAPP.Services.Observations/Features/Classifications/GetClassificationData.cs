@@ -1,6 +1,6 @@
 using FastEndpoints;
-using MediatR;
 using MAPP.Modules.Observations.Application.Classifications.Queries.GetClassificationData;
+using MAPP.Modules.Observations.Application.Classifications.Services;
 
 namespace MAPP.Services.Observations.Features.Classifications;
 
@@ -13,15 +13,15 @@ public class GetClassificationDataRequest
 }
 
 /// <summary>
-/// Fast Endpoint for getting complete classification data
+/// Fast Endpoint for getting complete classification data with enhanced caching
 /// </summary>
 public class GetClassificationDataEndpoint : Endpoint<GetClassificationDataRequest, ClassificationDataVm>
 {
-    private readonly IMediator _mediator;
+    private readonly IClassificationDataService _classificationService;
 
-    public GetClassificationDataEndpoint(IMediator mediator)
+    public GetClassificationDataEndpoint(IClassificationDataService classificationService)
     {
-        _mediator = mediator;
+        _classificationService = classificationService;
     }
 
     public override void Configure()
@@ -31,19 +31,14 @@ public class GetClassificationDataEndpoint : Endpoint<GetClassificationDataReque
         Summary(s =>
         {
             s.Summary = "Get complete classification data";
-            s.Description = "Returns all domains, attributes, and progression points for child development observations";
+            s.Description = "Returns all domains, attributes, and progression points with multi-tier caching (Redis → GCS → Database)";
             s.Response<ClassificationDataVm>(200, "Classification data retrieved successfully");
         });
     }
 
     public override async Task HandleAsync(GetClassificationDataRequest req, CancellationToken ct)
     {
-        var query = new GetClassificationDataQuery
-        {
-            IncludeInactive = req.IncludeInactive
-        };
-
-        var result = await _mediator.Send(query, ct);
+        var result = await _classificationService.GetClassificationDataAsync(req.IncludeInactive, ct);
         await SendOkAsync(result, ct);
     }
 }
