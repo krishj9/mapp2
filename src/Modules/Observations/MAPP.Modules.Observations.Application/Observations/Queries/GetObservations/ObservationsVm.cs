@@ -1,7 +1,7 @@
 namespace MAPP.Modules.Observations.Application.Observations.Queries.GetObservations;
 
 /// <summary>
-/// Observations view model following Ardalis patterns
+/// Observations view model following clean architecture patterns
 /// </summary>
 public class ObservationsVm
 {

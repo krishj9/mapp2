@@ -5,7 +5,7 @@ using MAPP.Modules.Observations.Domain.Entities;
 namespace MAPP.Modules.Observations.Infrastructure.Data.Configurations;
 
 /// <summary>
-/// ObservationAttribute entity configuration following Ardalis patterns
+/// ObservationAttribute entity configuration following clean architecture patterns
 /// </summary>
 public class ObservationAttributeConfiguration : IEntityTypeConfiguration<ObservationAttribute>
 {

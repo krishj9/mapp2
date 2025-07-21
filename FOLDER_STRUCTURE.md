@@ -219,4 +219,4 @@ MAPPV2/
 ### 3. **Independent API Services:**
 - Each domain has its own API host
 - Can be run independently or together
-- FastEndpoints-based following Ardalis patterns
+- FastEndpoints-based following clean architecture patterns

@@ -5,7 +5,7 @@ using MAPP.Modules.Planning.Application.Plans.Queries.GetPlans;
 namespace MAPP.Services.Planning.Endpoints.Plans;
 
 /// <summary>
-/// Get all plans endpoint using FastEndpoints following Ardalis patterns
+/// Get all plans endpoint using FastEndpoints following clean architecture patterns
 /// </summary>
 public class GetAll : BaseEndpoint<GetPlansRequest, PlansVm>
 {

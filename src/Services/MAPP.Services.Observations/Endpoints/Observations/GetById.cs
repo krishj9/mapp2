@@ -5,7 +5,7 @@ using MAPP.Modules.Observations.Application.Observations.Queries.GetObservations
 namespace MAPP.Services.Observations.Endpoints.Observations;
 
 /// <summary>
-/// Get observation by ID endpoint using FastEndpoints following Ardalis patterns
+/// Get observation by ID endpoint using FastEndpoints following clean architecture patterns
 /// </summary>
 public class GetById : BaseEndpoint<GetObservationByIdRequest, ObservationBriefDto>
 {

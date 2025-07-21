@@ -2,7 +2,7 @@ using FastEndpoints;
 using MediatR;
 using MAPP.Modules.Observations.Application.Classifications.Commands.SeedClassificationData;
 
-namespace MAPP.Services.Observations.Features.Classifications;
+namespace MAPP.Services.Observations.Endpoints.Classifications;
 
 /// <summary>
 /// Request model for seeding classification data

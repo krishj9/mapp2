@@ -11,7 +11,6 @@ using MAPP.Modules.Observations.Application.Common.Interfaces;
 using MAPP.Modules.Observations.Application.Classifications.Services;
 using MAPP.Modules.Observations.Infrastructure.Data;
 using MAPP.Modules.Observations.Infrastructure.Services;
-using MAPP.Modules.Observations.Application.Classifications.Services;
 
 namespace MAPP.Modules.Observations.Infrastructure;
 

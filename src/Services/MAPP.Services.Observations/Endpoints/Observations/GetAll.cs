@@ -5,7 +5,7 @@ using MAPP.Modules.Observations.Application.Observations.Queries.GetObservations
 namespace MAPP.Services.Observations.Endpoints.Observations;
 
 /// <summary>
-/// Get all observations endpoint using FastEndpoints following Ardalis patterns
+/// Get all observations endpoint using FastEndpoints following clean architecture patterns
 /// </summary>
 public class GetAll : BaseEndpoint<GetObservationsRequest, ObservationsVm>
 {

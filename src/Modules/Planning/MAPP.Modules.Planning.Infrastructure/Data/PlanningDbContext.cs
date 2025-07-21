@@ -9,7 +9,7 @@ using MAPP.Modules.Planning.Domain.Entities;
 namespace MAPP.Modules.Planning.Infrastructure.Data;
 
 /// <summary>
-/// Planning database context following Ardalis patterns
+/// Planning database context following clean architecture patterns
 /// </summary>
 public class PlanningDbContext : BaseDbContext, IPlanningDbContext
 {

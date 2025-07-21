@@ -9,7 +9,7 @@ using MAPP.Modules.Observations.Domain.Entities;
 namespace MAPP.Modules.Observations.Infrastructure.Data;
 
 /// <summary>
-/// Observations database context following Ardalis patterns
+/// Observations database context following clean architecture patterns
 /// </summary>
 public class ObservationsDbContext : BaseDbContext, IObservationsDbContext
 {

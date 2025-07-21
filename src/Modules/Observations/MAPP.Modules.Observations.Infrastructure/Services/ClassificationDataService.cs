@@ -8,7 +8,6 @@ using MAPP.Modules.Observations.Application.Classifications.Models;
 using MAPP.Modules.Observations.Application.Classifications.Queries.GetClassificationData;
 using MAPP.Modules.Observations.Application.Classifications.Services;
 using MAPP.Modules.Observations.Application.Common.Interfaces;
-using MAPP.Modules.Observations.Infrastructure.Services;
 
 namespace MAPP.Modules.Observations.Infrastructure.Services;
 
@@ -339,7 +338,7 @@ public class ClassificationDataService : IClassificationDataService
                     Points = p.Points,
                     Title = p.Title,
                     Description = p.Description,
-                    Order = p.Order,
+                    Order = p.Order ?? string.Empty,
                     CategoryInformation = p.CategoryInformation,
                     SortOrder = p.SortOrder,
                     IsActive = true // Only active items are exported

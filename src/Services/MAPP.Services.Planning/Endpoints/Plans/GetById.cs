@@ -5,7 +5,7 @@ using MAPP.Modules.Planning.Application.Plans.Queries.GetPlans;
 namespace MAPP.Services.Planning.Endpoints.Plans;
 
 /// <summary>
-/// Get plan by ID endpoint using FastEndpoints following Ardalis patterns
+/// Get plan by ID endpoint using FastEndpoints following clean architecture patterns
 /// </summary>
 public class GetById : BaseEndpoint<GetPlanByIdRequest, PlanBriefDto>
 {

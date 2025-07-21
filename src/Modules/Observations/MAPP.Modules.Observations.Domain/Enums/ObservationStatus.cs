@@ -1,7 +1,7 @@
 namespace MAPP.Modules.Observations.Domain.Enums;
 
 /// <summary>
-/// Observation status enumeration following Ardalis patterns
+/// Observation status enumeration following clean architecture patterns
 /// </summary>
 public enum ObservationStatus
 {

@@ -5,7 +5,7 @@ using MAPP.Modules.Planning.Application.Plans.Commands.CreatePlan;
 namespace MAPP.Services.Planning.Endpoints.Plans;
 
 /// <summary>
-/// Create plan endpoint using FastEndpoints following Ardalis patterns
+/// Create plan endpoint using FastEndpoints following clean architecture patterns
 /// </summary>
 public class Create : BaseEndpoint<CreatePlanRequest, CreatePlanResponse>
 {

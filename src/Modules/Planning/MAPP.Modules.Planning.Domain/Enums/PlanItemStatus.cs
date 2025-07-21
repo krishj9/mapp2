@@ -1,7 +1,7 @@
 namespace MAPP.Modules.Planning.Domain.Enums;
 
 /// <summary>
-/// Plan item status enumeration following Ardalis patterns
+/// Plan item status enumeration following clean architecture patterns
 /// </summary>
 public enum PlanItemStatus
 {

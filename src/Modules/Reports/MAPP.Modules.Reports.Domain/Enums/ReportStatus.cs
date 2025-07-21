@@ -1,7 +1,7 @@
 namespace MAPP.Modules.Reports.Domain.Enums;
 
 /// <summary>
-/// Report status enumeration following Ardalis patterns
+/// Report status enumeration following clean architecture patterns
 /// </summary>
 public enum ReportStatus
 {

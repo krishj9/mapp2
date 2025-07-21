@@ -1,7 +1,7 @@
 using FastEndpoints;
 using MAPP.Modules.Observations.Application.Classifications.Services;
 
-namespace MAPP.Services.Observations.Features.Classifications;
+namespace MAPP.Services.Observations.Endpoints.Classifications;
 
 /// <summary>
 /// Response model for version information

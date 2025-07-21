@@ -3,7 +3,7 @@ using FluentValidation;
 namespace MAPP.Modules.Observations.Application.Observations.Commands.CreateObservation;
 
 /// <summary>
-/// Create observation command validator following Ardalis patterns
+/// Create observation command validator following clean architecture patterns
 /// </summary>
 public class CreateObservationCommandValidator : AbstractValidator<CreateObservationCommand>
 {

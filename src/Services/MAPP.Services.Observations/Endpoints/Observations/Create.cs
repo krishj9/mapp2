@@ -5,7 +5,7 @@ using MAPP.Modules.Observations.Application.Observations.Commands.CreateObservat
 namespace MAPP.Services.Observations.Endpoints.Observations;
 
 /// <summary>
-/// Create observation endpoint using FastEndpoints following Ardalis patterns
+/// Create observation endpoint using FastEndpoints following clean architecture patterns
 /// </summary>
 public class Create : BaseEndpoint<CreateObservationRequest, CreateObservationResponse>
 {

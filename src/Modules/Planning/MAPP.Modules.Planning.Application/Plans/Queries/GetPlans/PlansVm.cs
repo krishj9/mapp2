@@ -1,7 +1,7 @@
 namespace MAPP.Modules.Planning.Application.Plans.Queries.GetPlans;
 
 /// <summary>
-/// Plans view model following Ardalis patterns
+/// Plans view model following clean architecture patterns
 /// </summary>
 public class PlansVm
 {

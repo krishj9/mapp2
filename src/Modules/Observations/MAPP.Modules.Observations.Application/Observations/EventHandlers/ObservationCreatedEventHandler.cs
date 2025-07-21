@@ -5,7 +5,7 @@ using MAPP.Modules.Observations.Domain.Events;
 namespace MAPP.Modules.Observations.Application.Observations.EventHandlers;
 
 /// <summary>
-/// Observation created event handler following Ardalis patterns
+/// Observation created event handler following clean architecture patterns
 /// </summary>
 public class ObservationCreatedEventHandler : INotificationHandler<ObservationCreatedEvent>
 {

@@ -5,7 +5,7 @@ using MAPP.Modules.Planning.Domain.Events;
 namespace MAPP.Modules.Planning.Application.Plans.EventHandlers;
 
 /// <summary>
-/// Plan created event handler following Ardalis patterns
+/// Plan created event handler following clean architecture patterns
 /// </summary>
 public class PlanCreatedEventHandler : INotificationHandler<PlanCreatedEvent>
 {

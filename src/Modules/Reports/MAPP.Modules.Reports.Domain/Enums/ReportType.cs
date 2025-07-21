@@ -1,7 +1,7 @@
 namespace MAPP.Modules.Reports.Domain.Enums;
 
 /// <summary>
-/// Report type enumeration following Ardalis patterns
+/// Report type enumeration following clean architecture patterns
 /// </summary>
 public enum ReportType
 {

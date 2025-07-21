@@ -2,7 +2,7 @@ using FastEndpoints;
 using MAPP.Modules.Observations.Application.Classifications.Queries.GetClassificationData;
 using MAPP.Modules.Observations.Application.Classifications.Services;
 
-namespace MAPP.Services.Observations.Features.Classifications;
+namespace MAPP.Services.Observations.Endpoints.Classifications;
 
 /// <summary>
 /// Request model for getting classification data

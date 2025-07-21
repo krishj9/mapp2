@@ -4,7 +4,7 @@ using MAPP.Modules.Observations.Domain.Entities;
 namespace MAPP.Modules.Observations.Application.Observations.Queries.GetObservations;
 
 /// <summary>
-/// Observation brief DTO following Ardalis patterns
+/// Observation brief DTO following clean architecture patterns
 /// </summary>
 public class ObservationBriefDto
 {

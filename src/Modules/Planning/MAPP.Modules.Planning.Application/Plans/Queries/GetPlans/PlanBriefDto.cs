@@ -5,7 +5,7 @@ using MAPP.Modules.Planning.Domain.Enums;
 namespace MAPP.Modules.Planning.Application.Plans.Queries.GetPlans;
 
 /// <summary>
-/// Plan brief DTO following Ardalis patterns
+/// Plan brief DTO following clean architecture patterns
 /// </summary>
 public class PlanBriefDto
 {

@@ -5,7 +5,7 @@ using MAPP.Modules.Observations.Domain.Entities;
 namespace MAPP.Modules.Observations.Infrastructure.Data.Configurations;
 
 /// <summary>
-/// Progression point entity configuration following Ardalis patterns
+/// Progression point entity configuration following clean architecture patterns
 /// </summary>
 public class ProgressionPointConfiguration : IEntityTypeConfiguration<ProgressionPoint>
 {

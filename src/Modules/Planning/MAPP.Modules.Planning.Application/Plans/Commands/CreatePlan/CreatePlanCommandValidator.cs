@@ -3,7 +3,7 @@ using FluentValidation;
 namespace MAPP.Modules.Planning.Application.Plans.Commands.CreatePlan;
 
 /// <summary>
-/// Create plan command validator following Ardalis patterns
+/// Create plan command validator following clean architecture patterns
 /// </summary>
 public class CreatePlanCommandValidator : AbstractValidator<CreatePlanCommand>
 {

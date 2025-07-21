@@ -6,7 +6,7 @@ using MAPP.Modules.Planning.Domain.ValueObjects;
 namespace MAPP.Modules.Planning.Infrastructure.Data.Configurations;
 
 /// <summary>
-/// Plan entity configuration following Ardalis patterns
+/// Plan entity configuration following clean architecture patterns
 /// </summary>
 public class PlanConfiguration : IEntityTypeConfiguration<Plan>
 {

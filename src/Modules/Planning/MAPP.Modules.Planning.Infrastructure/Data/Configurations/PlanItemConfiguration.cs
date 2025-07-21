@@ -5,7 +5,7 @@ using MAPP.Modules.Planning.Domain.Entities;
 namespace MAPP.Modules.Planning.Infrastructure.Data.Configurations;
 
 /// <summary>
-/// Plan item entity configuration following Ardalis patterns
+/// Plan item entity configuration following clean architecture patterns
 /// </summary>
 public class PlanItemConfiguration : IEntityTypeConfiguration<PlanItem>
 {
